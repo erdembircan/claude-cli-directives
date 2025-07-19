@@ -3,6 +3,6 @@
 !commands/
 !commands/**
 !git-commit-instructions.md
-
+!README.md
 
 !.gitignore
