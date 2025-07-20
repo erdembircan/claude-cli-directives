@@ -2,7 +2,10 @@
 
 !commands/
 !commands/**
-!git-commit-instructions.md
+!instructions/
+!instructions/**
+
+!CLAUDE.md
 !README.md
 
 !.gitignore
