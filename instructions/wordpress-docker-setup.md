@@ -1,9 +1,22 @@
 # WordPress Docker Setup Instructions
 
-## Guidelines
+## Setup Process
 
-Follow these steps in order:
-- copy the content of `@instructions/inc/wordpress-docker-setup` folder to root of the project
-- ask for each of the key values that are required in the `.env` file one by one instead of asking for all at once
-- use quotes for the values in the `.env` file which has spaces in it
-- change the volume and network names in `docker-composer.yml` to match the project name after creation of the `.env` file
+1. **Copy Template Files**
+    - Copy all contents from `@instructions/inc/wordpress-docker-setup` to the project root including hidden `.env.example` file
+    - Rename any copied file if they include `example` in their name (e.g., `.env.example` to `.env`)
+
+2. **Environment Configuration**
+    - Read the `.env` file to identify all required variables
+    - Read `docker-compose.yml` to understand how these variables are used
+    - Ask for each variable's value one by one (not all at once) and give clear instructions on what each variable is for
+    - For any values containing spaces, wrap them in quotes
+
+3. **Update Docker Configuration**
+    - After `.env` is complete, update `docker-compose.yml`:
+        - Replace generic volume and network names with project-specific names (using the project name from `.env`)
+    - Ensure all references use the same naming pattern
+
+4. **Docker Information**
+   - Provide the server url to access the WordPress site
+   - Provide admin username and password for WordPress
