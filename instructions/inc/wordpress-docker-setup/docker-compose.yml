@@ -1,0 +1,74 @@
+services:
+  #WordPress
+  wordpress:
+    build:
+      context: ./Dockerfiles
+      dockerfile: Dockerfile_latest
+    container_name: ${DOCKER_PROJECT_ID}_wordpress
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: [ "CMD", "curl" , "-f", "http://localhost/wp-admin/install.php" ]
+      interval: 10s
+      retries: 5
+      timeout: 30s
+    ports:
+      - ${DOCKER_WORDPRESS_PORT}:80
+    environment:
+      WORDPRESS_DB_HOST: ${DOCKER_WORDPRESS_DB_HOST}
+      WORDPRESS_DB_PASSWORD: ${DOCKER_WORDPRESS_DB_PASSWORD}
+      WORDPRESS_DB_USER: ${DOCKER_WORDPRESS_DB_USER}
+      WORDPRESS_DB_NAME: ${DOCKER_WORDPRESS_DB_NAME}
+      WORDPRESS_DB_PREFIX: wp_
+      WORDPRESS_DEBUG: 1
+    volumes:
+      - ./wordpress:/var/www/html
+    networks:
+      - docker-project-volume_network
+
+
+  #WordPress CLI
+  cli:
+    build:
+      context: ./Dockerfiles
+      dockerfile: Dockerfile_wp_cli
+    container_name: ${DOCKER_PROJECT_ID}_cli
+    env_file:
+      - .env
+    depends_on:
+      wordpress:
+        condition: service_healthy
+    environment:
+      WORDPRESS_DB_HOST: ${DOCKER_WORDPRESS_DB_HOST}
+      WORDPRESS_DB_PASSWORD: ${DOCKER_WORDPRESS_DB_PASSWORD}
+      WORDPRESS_DB_USER: ${DOCKER_WORDPRESS_DB_USER}
+    volumes:
+      - ./wordpress:/var/www/html
+    networks:
+      - docker-project-volume_network
+
+  #Database
+  db:
+    image: mariadb:latest
+    container_name: ${DOCKER_PROJECT_ID}_db
+    environment:
+      MYSQL_DATABASE: ${DOCKER_WORDPRESS_DB_NAME}
+      MYSQL_ROOT_PASSWORD: ${DOCKER_WORDPRESS_DB_PASSWORD}
+    healthcheck:
+      test: [ "CMD", "healthcheck.sh", "--connect", "--innodb_initialized" ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - docker-project-volume_db-volume:/var/lib/mysql
+    networks:
+      - docker-project-volume_network
+
+volumes:
+  docker-project-volume_db-volume:
+
+networks:
+  docker-project-volume_network:
+    driver: bridge
+

@@ -1,0 +1,9 @@
+FROM wordpress:cli
+
+USER root
+
+ADD ./includes/wp_cli_entry.sh /usr/local/bin/entry.sh
+
+RUN chmod +x /usr/local/bin/entry.sh
+
+ENTRYPOINT [ "entry.sh" ]
