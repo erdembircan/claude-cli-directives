@@ -34,9 +34,9 @@ Use the following format for all commit messages:
 
 ## Guidelines
 
+- Do not include AI tool credits or co-authorship attribution in commit messages 
 - Use the imperative mood in the description ("add" not "added" or "adds")
 - Don't capitalize the first letter of the description
 - Capitalize the type (feat, fix, etc.)
 - No period at the end of the description
 - Keep the description concise (50 characters or less is ideal)
-- Do not include AI tool credits or co-authorship attribution in commit messages
