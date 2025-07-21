@@ -37,6 +37,7 @@ Use the following format for all commit messages:
 
 ## Guidelines
 
+- Give no explanatory content just commit message format
 - Use the imperative mood in the description ("add" not "added" or "adds")
 - Don't capitalize the first letter of the description
 - Capitalize the type (feat, fix, etc.)
