@@ -42,4 +42,4 @@ Use the following format for all commit messages:
 - Capitalize the type (feat, fix, etc.)
 - No period at the end of the description
 - Keep the description concise (50 characters or less is ideal)
-- Explain to the user the "why" behind the change in the body of the commit message both your reasoning behind choosing the type and the description
+- After making a commit, explain to the user your reasoning behind choosing the commit type and description
