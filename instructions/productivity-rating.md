@@ -9,7 +9,7 @@ Asses productivity rating of current codebase for a given time period(eg, today,
 - Large line counts are not a deduction
 - For single day, if not supplied, ask user amount of tracked time to calculate metrics
 
-Example output:
+## Example
 
 ```
 Productivity Rating: 8.5/10

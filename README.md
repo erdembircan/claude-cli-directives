@@ -26,10 +26,10 @@ The directives in this repository are automatically available when using Claude 
 ~/.claude/
 ├── CLAUDE.md                    # Main configuration file
 ├── commands/                    # Reusable commands
-└── instructions/               # Instruction templates
+└── instructions/                # Instruction templates
     ├── git-commit-instructions.md
     ├── wordpress-docker-setup.md
-    └── inc/                    # Template files and resources
+    └── inc/                     # Template files and resources
 ```
 
 ## Commands
