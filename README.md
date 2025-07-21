@@ -40,5 +40,10 @@ The directives in this repository are automatically available when using Claude 
 
 - **`git-commit-instructions.md`** - Conventional commit format guidelines
   - Example: "Commit my changes with a proper conventional commit message"
+  - Sample commit messages:
+    - `[FEAT]: add user authentication system`
+    - `[FIX]: resolve login redirect issue`
+    - `[DOCS]: update API documentation`
+    - `[REFACTOR]: restructure user service`
 - **`wordpress-docker-setup.md`** - WordPress Docker development environment setup
   - Example: "Set up WordPress with Docker for this project"
