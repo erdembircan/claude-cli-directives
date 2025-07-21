@@ -32,9 +32,11 @@ Use the following format for all commit messages:
 [CHORE]: update dependencies
 ```
 
+## **IMPORTANT**
+**DO NOT INCLUDE AI TOOL CREDITS OR CO-AUTHORSHIP ATTRIBUTION IN COMMIT MESSAGES**
+
 ## Guidelines
 
-- Do not include AI tool credits or co-authorship attribution in commit messages 
 - Use the imperative mood in the description ("add" not "added" or "adds")
 - Don't capitalize the first letter of the description
 - Capitalize the type (feat, fix, etc.)
