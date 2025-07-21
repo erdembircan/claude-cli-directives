@@ -47,3 +47,5 @@ The directives in this repository are automatically available when using Claude 
     - `[REFACTOR]: restructure user service`
 - **`wordpress-docker-setup.md`** - WordPress Docker development environment setup
   - Example: "Set up WordPress with Docker for this project"
+- **`productivity-rating.md`** - Assess productivity rating of active codebase for given time periods 
+  - Example: "Rate my productivity for today" or "Assess my productivity for this week"
