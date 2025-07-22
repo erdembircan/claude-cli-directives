@@ -3,31 +3,60 @@
 Asses productivity rating of current codebase for a given time period(eg, today, yesterday, this week, last week).
 
 ## Guidelines
-- Ratings are out of 10 with 0.5 increments
-- Working on sundays are a negative which might be caused from planning issues during weekdays
+- Ratings are out of 10 with 0.5 increments/decrements
 - Week start from monday and ends at saturday (both inclusive)
 - Large line counts are not a deduction
 - For single day, if not supplied, ask user amount of tracked time to calculate metrics
 
 ## Example
+```markdown
+# Daily Productivity Assessment
 
-```
-Productivity Rating: 8.5/10
+## Overall Performance Score: `8.5/10` ⭐
 
-  Breakdown:
-  - 16 commits = 2.7 commits/hour (excellent)
-  - ~15k lines = 2,500+ lines/hour (very high)
-  - Quality: Good commit discipline, meaningful feature work
-  - Scope: Full-stack work (UI, state management, build tools, types)
+### 📊 Key Metrics Dashboard
 
-  Analysis:
-  - High commit frequency shows good incremental progress
-  - Large line count indicates substantial feature development
-  - Mix of feature work and technical improvements shows balanced approach
-  - Strong focus on one area (settings page) rather than scattered work
+| Metric | Value | Rate | Performance |
+|--------|-------|------|-------------|
+| **Commits** | 16 | 2.7/hour | 🟢 Excellent |
+| **Lines Modified** | ~15,000 | 2,500+/hour | 🟢 Very High |
+| **Active Hours** | 6 hours | - | - |
+| **Code Quality** | - | - | 🟢 Good |
 
-  Deductions:
-  - Some commits could be squashed (minor)
+### 🎯 Work Distribution
 
-  Very productive day with solid engineering practices.
+**Primary Focus Areas:**
+- ✅ Full-stack development (UI, state management, build tools, types)
+- ✅ Settings page implementation
+- ✅ Technical improvements and optimizations
+
+### 💪 Strengths Demonstrated
+
+1. **High Commit Frequency**
+   - Excellent incremental progress tracking
+   - Strong version control discipline
+   
+2. **Substantial Output**
+   - Large-scale feature development completed
+   - High line count indicates significant progress
+   
+3. **Balanced Approach**
+   - Effective mix of feature work and technical debt reduction
+   - Focused effort on single area prevents context switching
+
+### 📈 Quality Indicators
+
+- **Commit Discipline:** ✓ Meaningful commit messages
+- **Code Organization:** ✓ Well-structured changes
+- **Scope Management:** ✓ Focused on cohesive feature set
+
+### 🔍 Areas for Optimization
+
+| Area | Impact | Recommendation |
+|------|--------|----------------|
+| Commit Hygiene | Low | Consider squashing related commits |
+
+### 📝 Executive Summary
+
+> **Verdict:** Very productive day with solid engineering practices. The combination of high output volume, quality commit practices, and focused full-stack development demonstrates excellent productivity and professional development standards.
 ```
