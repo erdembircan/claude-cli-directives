@@ -1,0 +1,1 @@
+Assess productivity rating of active codebase for given time periods using `@instructions/productivity-rating.md`. If no time period is specified, default to today.
