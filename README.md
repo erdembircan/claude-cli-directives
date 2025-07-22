@@ -2,7 +2,7 @@
 
 Personal collection of reusable Claude Code commands and workflow configurations.
 
-## Installation and Usage
+## 🚀 Installation and Usage
 
 ### Setup
 
@@ -32,12 +32,12 @@ The directives in this repository are automatically available when using Claude 
     └── inc/                     # Template files and resources
 ```
 
-## Commands
+## ⚡ Commands
 
 - **`ai-git-push`** - Automated git staging, commit, and push workflow
 - **`ai-productivity-rating`** - Assess productivity rating of active codebase for given time periods
 
-## Instructions
+## 📋 Instructions
 
 - **`git-commit-instructions.md`** - Conventional commit format guidelines
   - Example: "Commit my changes with a proper conventional commit message"
