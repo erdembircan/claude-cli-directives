@@ -25,12 +25,18 @@ The directives in this repository are automatically available when using Claude 
 ```
 ~/.claude/
 ├── CLAUDE.md                    # Main configuration file
+├── agents/                      # Specialized agent configurations
 ├── commands/                    # Reusable commands
 └── instructions/                # Instruction templates
     ├── git-commit-instructions.md
     ├── wordpress-docker-setup.md
     └── inc/                     # Template files and resources
 ```
+
+## 🤖 Agents
+
+- **`code-reviewer`** - Code quality and security review
+- **`commit-enforcer`** - Validates commit message format
 
 ## ⚡ Commands
 
