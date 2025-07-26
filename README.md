@@ -37,6 +37,7 @@ The directives in this repository are automatically available when using Claude 
 
 - **`code-reviewer`** - Code quality and security review
 - **`commit-enforcer`** - Validates commit message format
+- **`notion-task-processor`** - Finds and processes tasks assigned to AI in Notion boards
 
 ## ⚡ Commands
 
