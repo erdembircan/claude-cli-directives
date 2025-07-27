@@ -29,6 +29,7 @@ The directives in this repository are automatically available when using Claude 
 ├── commands/                    # Reusable commands
 └── instructions/                # Instruction templates
     ├── git-commit-instructions.md
+    ├── notion-task-processor.md
     ├── wordpress-docker-setup.md
     └── inc/                     # Template files and resources
 ```
@@ -37,7 +38,6 @@ The directives in this repository are automatically available when using Claude 
 
 - **`code-reviewer`** - Code quality and security review
 - **`commit-enforcer`** - Validates commit message format
-- **`notion-task-processor`** - Finds and processes tasks assigned to AI in Notion boards
 
 ## ⚡ Commands
 
@@ -53,6 +53,8 @@ The directives in this repository are automatically available when using Claude 
     - `[FIX]: resolve login redirect issue`
     - `[DOCS]: update API documentation`
     - `[REFACTOR]: restructure user service`
+- **`notion-task-processor.md`** - Automated Notion task discovery and processing workflow
+  - Example: "Process all AI-assigned tasks from my Notion board"
 - **`productivity-rating.md`** - Assess productivity rating of active codebase for given time periods 
   - Example: "Rate my productivity for today" or "Assess my productivity for this week"
 - **`wordpress-docker-setup.md`** - WordPress Docker development environment setup

@@ -5,6 +5,9 @@
 ## 💬 Conversation with AI
 @instructions/conversation.md
 
+## 🤖 Notion Task Processor
+@instructions/notion-task-processor.md
+
 ## 📊 Productivity Rating
 @instructions/productivity-rating.md
 
