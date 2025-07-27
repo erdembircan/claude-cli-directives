@@ -1,0 +1,1 @@
+Automatically find and process tasks assigned to AI in Notion boards. Use `@instructions/notion-task-processor.md` to execute the complete workflow from task discovery through implementation and status updates.

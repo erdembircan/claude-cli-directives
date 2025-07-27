@@ -42,6 +42,7 @@ The directives in this repository are automatically available when using Claude 
 ## ⚡ Commands
 
 - **`ai-git-push`** - Automated git staging, commit, and push workflow
+- **`ai-notion-tasks`** - Automated Notion task discovery and processing workflow
 - **`ai-productivity-rating`** - Assess productivity rating of active codebase for given time periods
 
 ## 📋 Instructions
