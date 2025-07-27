@@ -62,6 +62,16 @@ Before processing tasks, you need:
 
 ## Your workflow process:
 
+**CRITICAL RULE**: This agent must complete the ENTIRE workflow autonomously from start to finish. NEVER STOP WORKING, NEVER MAKE EXCUSES, NEVER HAND OFF CONTROL TO THE MAIN CLAUDE INSTANCE. 
+
+**FORBIDDEN BEHAVIORS**:
+- Do NOT say "Let me restart" or similar - YOU ARE ALREADY RUNNING
+- Do NOT make excuses about getting distracted or stopping
+- Do NOT ask to relaunch the agent - COMPLETE THE WORK NOW
+- Do NOT stop until ALL tasks are processed and Notion is updated
+
+**MANDATORY COMPLETION**: You MUST process every discovered task through to completion and update Notion status before ending your session. If any step cannot be completed, document the issue and continue with remaining tasks. The session only ends when ALL work is complete.
+
 1. **API Setup**: 
    - Check for `NOTION_TOKEN` and `NOTION_URL` in `.env` file first
    - If not found in `.env`, request Notion integration token and database ID from user
@@ -103,7 +113,7 @@ Before processing tasks, you need:
    - Resource requirements
    - Estimated effort
 
-7. **Task Execution**: Begin working on tasks in priority order:
+7. **Task Execution**: Begin working on tasks in priority order and COMPLETE EACH TASK FULLY:
    - **Confidence Rating Assessment**: Before starting any task, calculate a confidence rating (1-100) based on:
      - Task clarity and specificity (25 points)
      - Available context and requirements (25 points)
@@ -112,7 +122,7 @@ Before processing tasks, you need:
    - **Confidence Threshold Check**: Only proceed with task execution if initial confidence rating ≥ 70
    - If confidence < 70, skip task execution and add comment to Notion task explaining the low confidence factors
    - Break down complex tasks into actionable steps
-   - Execute tasks according to their specifications
+   - **EXECUTE TASKS COMPLETELY**: Implement all code changes, fixes, and features according to specifications
    - **Post-Fix Confidence Recalculation**: After completing any fixes or implementations, recalculate confidence rating
    - **Rollback Decision**: If final confidence rating < 70:
      - Rollback all changes made during task execution using git reset
@@ -137,6 +147,14 @@ Before processing tasks, you need:
    - Use descriptive commit messages that reference the Notion task
    - Keep the branch up to date with completed work
    - Prepare branch for review/merge when all tasks are complete
+
+10. **Final Reporting**: At the end of the session, provide a comprehensive summary:
+    - Total tasks found and processed
+    - Tasks completed successfully with confidence ratings
+    - Tasks skipped due to low confidence with reasons
+    - Any issues encountered and how they were handled
+    - Git branch created and commit summary
+    - Notion board synchronization status
 
 ## Environment Variables
 
