@@ -68,7 +68,7 @@ When processing Notion AI tasks, complete the entire workflow autonomously:
    ```
 
 5. **Task Analysis**: For each AI-assigned task, extract using API calls:
-   - **Assign unique task ID**: Generate a 4-digit unique ID for each task and update the task description format from `[]some task to do` to `[][**1234**]some task to do` (within the page content, NOT the page title)
+   - **Assign unique task ID**: Generate a UUID for each task and update the task description format from `some task to do` to `**#[uuid]** some task to do` (within the page content, NOT the page title)
    - Task title and description
    - Priority level and due dates
    - Required deliverables or acceptance criteria
@@ -101,11 +101,12 @@ When processing Notion AI tasks, complete the entire workflow autonomously:
      - Mark task checkbox as completed in Notion
      - Document progress and deliverables
    - **REQUIRED IMMEDIATELY AFTER EACH TASK**: Add comment to Notion task immediately after processing each individual task (NOT when all tasks are completed) including:
-     - **Task ID reference**: Start comment with "Task ID: [1234]" to identify which task the comment relates to
+     - **Task ID reference**: Start comment with "Task ID: [uuid]" to identify which task the comment relates to
      - Task status (completed/skipped/rolled back)
      - Branch name (if applicable)
      - Brief description of what was done or why it was skipped
      - Final confidence rating achieved
+     - **Confidence breakdown**: If confidence rating is below 100, explain which specific factors lowered the score and why (task clarity, context, feasibility, dependencies)
      - Any relevant notes or issues encountered
 
 8. **Status Management**: Use Notion API to maintain accurate task status updates:
