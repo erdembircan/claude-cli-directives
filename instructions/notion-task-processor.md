@@ -77,8 +77,8 @@ When processing Notion AI tasks, complete the entire workflow autonomously:
    - Any specific instructions or context
 
 6. **Task Prioritization**: Organize discovered tasks by:
+   - Dependencies and logical sequence (PRIORITY: tasks with dependencies must be sorted after their prerequisites)
    - Urgency and importance
-   - Dependencies and logical sequence
    - Resource requirements
    - Estimated effort
 
