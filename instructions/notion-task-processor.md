@@ -100,14 +100,26 @@ When processing Notion AI tasks, complete the entire workflow autonomously:
      - Update task status in Notion via API as work progresses
      - Mark task checkbox as completed in Notion
      - Document progress and deliverables
-   - **REQUIRED IMMEDIATELY AFTER EACH TASK**: Add comment to Notion task immediately after processing each individual task (NOT when all tasks are completed) including:
-     - **Task ID reference**: Start comment with "Task ID: [uuid]" to identify which task the comment relates to
-     - Task status (completed/skipped/rolled back)
-     - Branch name (if applicable)
-     - Brief description of what was done or why it was skipped
-     - Final confidence rating achieved
-     - **Confidence breakdown**: If confidence rating is below 100, only list the specific factors that reduced the score with short but detailed explanations (e.g., "Feasibility (-15): Complex API integration requires third-party service not currently in codebase")
-     - Any relevant notes or issues encountered
+   - **REQUIRED IMMEDIATELY AFTER EACH TASK**: Add comment to Notion task immediately after processing each individual task (NOT when all tasks are completed) using this exact format:
+     ```
+     Date:                    YYYY-MM-DD HH:MM:SS
+     Task ID:                 [uuid]
+     Task:                    [Short brief description of what was tasked]
+     Status:                  COMPLETED/SKIPPED/ROLLED BACK
+     Branch:                  [Branch where changes were made]
+     Description:             [Short brief explanation of what was done or why it was skipped]
+     Final confidence rating: XX/100
+     Confidence breakdown:    [Only if rating below 100, list specific factors that reduced the score with short detailed explanations]
+     ```
+   - **LOG TO FILE**: Immediately after adding the comment to Notion, prepend the same comment content using the exact format above to `notion-task-processor.log` in the project root for local tracking (newest entries first)
+     - If the log file doesn't exist, create it with a header describing its purpose:
+       ```
+       # Notion Task Processor Log
+       # This file logs task completion comments from the automated Notion task processor.
+       # Each entry shows AI task processing results including status, confidence ratings, and outcomes.
+       # Generated automatically when processing tasks assigned to AI in Notion boards.
+       
+       ```
 
 8. **Status Management**: Use Notion API to maintain accurate task status updates:
    - DO NOT move completed pages to 'Done' status - instead mark task checkbox as checked
