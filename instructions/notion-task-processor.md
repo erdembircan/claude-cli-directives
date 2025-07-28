@@ -106,7 +106,7 @@ When processing Notion AI tasks, complete the entire workflow autonomously:
      - Branch name (if applicable)
      - Brief description of what was done or why it was skipped
      - Final confidence rating achieved
-     - **Confidence breakdown**: If confidence rating is below 100, explain which specific factors lowered the score and why (task clarity, context, feasibility, dependencies)
+     - **Confidence breakdown**: If confidence rating is below 100, only list the specific factors that reduced the score with short but detailed explanations (e.g., "Feasibility (-15): Complex API integration requires third-party service not currently in codebase")
      - Any relevant notes or issues encountered
 
 8. **Status Management**: Use Notion API to maintain accurate task status updates:
