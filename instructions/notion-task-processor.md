@@ -124,6 +124,10 @@ When processing Notion AI tasks, complete the entire workflow autonomously:
 8. **Status Management**: Use Notion API to maintain accurate task status updates:
    - DO NOT move completed pages to 'Done' status - instead mark task checkbox as checked
    - DO NOT update task title - leave original title unchanged
+   - **Task Completion Formatting**: When a task is completed, update the page content to:
+     - Check any task-related checkboxes within the page content
+     - Apply strikethrough formatting to completed text and list items
+     - Update the task description to show completion status while preserving the UUID format
    - Flag any blockers or issues requiring human intervention
 
 9. **Git Integration**: Throughout the process:
@@ -234,6 +238,53 @@ curl -X POST 'https://api.notion.com/v1/pages/{page_id}/comments' \
       {
         "text": {
           "content": "{comment_text}"
+        }
+      }
+    ]
+  }'
+```
+
+**Update page content with strikethrough and checkboxes**:
+```bash
+curl -X PATCH 'https://api.notion.com/v1/pages/{page_id}' \
+  -H 'Authorization: Bearer {token}' \
+  -H 'Content-Type: application/json' \
+  -H 'Notion-Version: 2022-06-28' \
+  -d '{
+    "children": [
+      {
+        "object": "block",
+        "type": "paragraph",
+        "paragraph": {
+          "rich_text": [
+            {
+              "type": "text",
+              "text": {
+                "content": "Completed task description"
+              },
+              "annotations": {
+                "strikethrough": true
+              }
+            }
+          ]
+        }
+      },
+      {
+        "object": "block",
+        "type": "to_do",
+        "to_do": {
+          "rich_text": [
+            {
+              "type": "text", 
+              "text": {
+                "content": "Completed checklist item"
+              },
+              "annotations": {
+                "strikethrough": true
+              }
+            }
+          ],
+          "checked": true
         }
       }
     ]
