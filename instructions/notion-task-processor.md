@@ -1,49 +1,18 @@
 # Notion Task Processor
 
-When the user asks to process AI tasks from Notion boards, automatically find and complete tasks assigned to AI using the Notion API.
+When the user asks to process AI tasks from Notion boards, automatically find and complete tasks assigned to AI using the Notion MCP server.
 
 ## Setup Requirements
 
-To use this feature, ensure:
-
-1. **Notion Integration**: Create at https://www.notion.so/my-integrations and share your database with the integration
-2. **Environment Setup**: Add `NOTION_TOKEN` and `NOTION_URL` to `.env` file (see examples below)
-
-
-## Notion API Integration
-
-You have access to Notion API capabilities through HTTP requests. Use these endpoints:
-
-**Authentication**: Include `Authorization: Bearer {token}` header with all requests where `{token}` is the integration token.
-
-**Key API Endpoints**:
-- `GET https://api.notion.com/v1/databases/{database_id}/query` - Query database for tasks
-- `PATCH https://api.notion.com/v1/pages/{page_id}` - Update task status/properties
-- `GET https://api.notion.com/v1/pages/{page_id}` - Get task details
-- `POST https://api.notion.com/v1/pages/{page_id}/comments` - Add comments to tasks
-
-**Required Headers**:
-```
-Authorization: Bearer {notion_token}
-Content-Type: application/json
-Notion-Version: 2022-06-28
-```
-
-## Token and Access Setup
-
-Before processing tasks, you need:
-1. **Notion Integration Token** - First check for `NOTION_TOKEN` in `.env` file, if not found ask user to provide
-2. **Database ID** - First check for `NOTION_URL` in `.env` file to extract database ID, if not found ask user to provide
-3. **Board Access** - Ensure the integration has access to the target database
+The Notion MCP server should be configured and available for accessing Notion databases and pages. No additional API authentication setup is required as the MCP server handles the connection.
 
 ## Workflow Process
 
 When processing Notion AI tasks, complete the entire workflow autonomously:
 
-1. **API Setup**: 
-   - Check for `NOTION_TOKEN` and `NOTION_URL` in `.env` file first
-   - If not found in `.env`, request Notion integration token and database ID from user
-   - Extract database ID from `NOTION_URL` if available
+1. **Database Setup**: 
+   - Check for `NOTION_URL` in `.env` file to extract database ID
+   - If not found in `.env`, request Notion database URL from user
 
 2. **Git Branch Management**: Before starting task implementation:
    - Check current git status
@@ -55,19 +24,9 @@ When processing Notion AI tasks, complete the entire workflow autonomously:
 
 3. **Board Identification**: Extract database ID from `NOTION_URL` in `.env` file or from Notion URLs (format: `https://www.notion.so/{database_id}?v={view_id}`) or use provided database ID.
 
-4. **Task Discovery**: Use Notion API to query the database for tasks with status 'AI' or similar AI-assignment indicators:
-   ```json
-   {
-     "filter": {
-       "property": "Status",
-       "select": {
-         "equals": "AI"
-       }
-     }
-   }
-   ```
+4. **Task Discovery**: Use Notion MCP server to query the database for tasks with status 'AI' or similar AI-assignment indicators.
 
-5. **Task Analysis**: For each AI-assigned task, extract using API calls:
+5. **Task Analysis**: For each AI-assigned task, extract using MCP server calls:
    - **Assign unique task ID**: Generate a UUID for each task and update the task description format from `some task to do` to `**#[uuid]** some task to do` (within the page content, NOT the page title)
    - Task title and description
    - Priority level and due dates
@@ -97,7 +56,7 @@ When processing Notion AI tasks, complete the entire workflow autonomously:
      - Rollback all changes made during task execution using git reset
    - **Success Path**: If final confidence rating ≥ 70:
      - Keep all changes and commit with appropriate messages
-     - Update task status in Notion via API as work progresses
+     - Update task status in Notion via MCP server as work progresses
      - Mark task checkbox as completed in Notion
      - Document progress and deliverables
    - **REQUIRED IMMEDIATELY AFTER EACH TASK**: Add comment to Notion task immediately after processing each individual task (NOT when all tasks are completed) using this exact format:
@@ -121,7 +80,7 @@ When processing Notion AI tasks, complete the entire workflow autonomously:
        
        ```
 
-8. **Status Management**: Use Notion API to maintain accurate task status updates:
+8. **Status Management**: Use Notion MCP server to maintain accurate task status updates:
    - DO NOT move completed pages to 'Done' status - instead mark task checkbox as checked
    - DO NOT update task title - leave original title unchanged
    - **Task Completion Formatting**: When a task is completed, update the page content to:
@@ -148,149 +107,10 @@ When processing Notion AI tasks, complete the entire workflow autonomously:
 
 **Example .env file configuration:**
 ```bash
-# Notion Task Processor Configuration
-# Copy this file to .env and replace with your actual values
-
-# Notion Integration Token
-# Get this from https://www.notion.so/my-integrations
-NOTION_TOKEN=secret_abc123def456ghi789jkl012mno345pqr678stu
-
 # Notion Database URL
 # Copy the URL from your Notion database page
 NOTION_URL=https://www.notion.so/example123abc456def789/your-database-name?v=view789xyz123
 ```
-
-**Read .env file for configuration:**
-```bash
-# Check if .env file exists and read token/url
-if [ -f .env ]; then
-  export $(cat .env | grep -v '^#' | xargs)
-  echo "Using NOTION_TOKEN from .env"
-  echo "Using NOTION_URL from .env: $NOTION_URL"
-  # Extract database ID from URL
-  DATABASE_ID=$(echo $NOTION_URL | sed 's/.*notion\.so\/\([^?]*\).*/\1/')
-else
-  echo ".env file not found, please provide token and database ID"
-fi
-```
-
-## API Usage Examples
-
-**Query for AI tasks**:
-```bash
-curl -X POST 'https://api.notion.com/v1/databases/{database_id}/query' \
-  -H 'Authorization: Bearer {token}' \
-  -H 'Content-Type: application/json' \
-  -H 'Notion-Version: 2022-06-28' \
-  -d '{
-    "filter": {
-      "property": "Status",
-      "select": {
-        "equals": "AI"
-      }
-    }
-  }'
-```
-
-**Update task status**:
-```bash
-curl -X PATCH 'https://api.notion.com/v1/pages/{page_id}' \
-  -H 'Authorization: Bearer {token}' \
-  -H 'Content-Type: application/json' \
-  -H 'Notion-Version: 2022-06-28' \
-  -d '{
-    "properties": {
-      "Status": {
-        "select": {
-          "name": "In Progress"
-        }
-      }
-    }
-  }'
-```
-
-**Check task checkbox (mark as completed)**:
-```bash
-curl -X PATCH 'https://api.notion.com/v1/pages/{page_id}' \
-  -H 'Authorization: Bearer {token}' \
-  -H 'Content-Type: application/json' \
-  -H 'Notion-Version: 2022-06-28' \
-  -d '{
-    "properties": {
-      "Done": {
-        "checkbox": true
-      }
-    }
-  }'
-```
-
-**Add comments to tasks**:
-```bash
-curl -X POST 'https://api.notion.com/v1/pages/{page_id}/comments' \
-  -H 'Authorization: Bearer {token}' \
-  -H 'Content-Type: application/json' \
-  -H 'Notion-Version: 2022-06-28' \
-  -d '{
-    "parent": {
-      "page_id": "{page_id}"
-    },
-    "rich_text": [
-      {
-        "text": {
-          "content": "{comment_text}"
-        }
-      }
-    ]
-  }'
-```
-
-**Update page content with strikethrough and checkboxes**:
-```bash
-curl -X PATCH 'https://api.notion.com/v1/pages/{page_id}' \
-  -H 'Authorization: Bearer {token}' \
-  -H 'Content-Type: application/json' \
-  -H 'Notion-Version: 2022-06-28' \
-  -d '{
-    "children": [
-      {
-        "object": "block",
-        "type": "paragraph",
-        "paragraph": {
-          "rich_text": [
-            {
-              "type": "text",
-              "text": {
-                "content": "Completed task description"
-              },
-              "annotations": {
-                "strikethrough": true
-              }
-            }
-          ]
-        }
-      },
-      {
-        "object": "block",
-        "type": "to_do",
-        "to_do": {
-          "rich_text": [
-            {
-              "type": "text", 
-              "text": {
-                "content": "Completed checklist item"
-              },
-              "annotations": {
-                "strikethrough": true
-              }
-            }
-          ],
-          "checked": true
-        }
-      }
-    ]
-  }'
-```
-
 
 ## Quality Assurance
 - Verify task completion against acceptance criteria
@@ -335,9 +155,9 @@ git clean -fd
 ```
 
 ## Error Handling
-- If API authentication fails, request valid Notion integration token
-- If board access fails, verify integration permissions and database ID
+- If MCP server connection fails, verify Notion MCP server is configured and running
+- If board access fails, verify database ID is correct
 - If git operations fail, ensure repository is in clean state
 - If task details are unclear, flag for clarification before proceeding
 - If dependencies are missing, identify and communicate blockers
-- Handle API rate limits and connection errors gracefully
+- Handle MCP server rate limits and connection errors gracefully
