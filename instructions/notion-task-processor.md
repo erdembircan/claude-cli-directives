@@ -27,6 +27,7 @@ When processing Notion AI tasks, complete the entire workflow autonomously:
 4. **Task Discovery**: Use Notion MCP server to query the database for tasks with status 'AI' or similar AI-assignment indicators.
 
 5. **Task Analysis**: For each AI-assigned task, extract using MCP server calls:
+   - **Complete Page Reading**: Read the ENTIRE page content including all todo lists, sub-lists, bullet points, sub-elements, code blocks, and detailed specifications. This is context engineering, not vibe coding - every detail matters for proper implementation
    - **Assign unique task ID**: Generate a UUID for each task and update the task description format from `some task to do` to `**#[uuid]** some task to do` (within the page content, NOT the page title)
    - Task title and description
    - Priority level and due dates
@@ -34,6 +35,7 @@ When processing Notion AI tasks, complete the entire workflow autonomously:
    - Dependencies or prerequisites
    - Branch base (`branch_base` property) - the branch to checkout from (defaults to `development`)
    - Any specific instructions or context
+   - All implementation details, specifications, and requirements found in nested lists and sub-elements
 
 6. **Task Prioritization**: Organize discovered tasks by:
    - Dependencies and logical sequence (PRIORITY: tasks with dependencies must be sorted after their prerequisites)
