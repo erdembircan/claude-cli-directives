@@ -73,7 +73,8 @@ When processing Notion AI tasks, complete the entire workflow autonomously:
      Confidence breakdown:    [Only if rating below 100, list specific factors that reduced the score with short detailed explanations]
      ```
    - **LOG TO FILE**: Immediately after adding the comment to Notion, prepend the same comment content using the exact format above to `notion-task-processor.log` in the project root for local tracking (newest entries first)
-     - If the log file doesn't exist, create it with a header describing its purpose:
+     - If the log file doesn't exist in the project root, check for a `logs` directory and use `logs/notion-task-processor.log` instead
+     - If neither location exists, create the log file in the project root with a header describing its purpose:
        ```
        # Notion Task Processor Log
        # This file logs task completion comments from the automated Notion task processor.
