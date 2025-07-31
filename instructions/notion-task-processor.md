@@ -14,20 +14,11 @@ When processing Notion AI tasks, complete the entire workflow autonomously:
    - Check for `NOTION_URL` in `.env` file to extract database ID
    - If not found in `.env`, request Notion database URL from user
 
-2. **Git Branch Management**: Before starting task implementation:
-   - Check current git status
-   - Check each task for `branch_merge` property to determine which branch to checkout from and merge to when told (defaults to `development` if not specified)
-   - Check each task for `branch` property to override automatic branch name generation
-   - Checkout to the specified merge branch and ensure it's up to date
-   - Create and checkout to a new branch named `ai-tasks-YYYY-MM-DD` (using today's date) from the merge branch, unless `branch` property overrides the name
-   - If branch already exists, switch to it
-   - Ensure working directory is clean before proceeding
+2. **Board Identification**: Extract database ID from `NOTION_URL` in `.env` file or from Notion URLs (format: `https://www.notion.so/{database_id}?v={view_id}`) or use provided database ID.
 
-3. **Board Identification**: Extract database ID from `NOTION_URL` in `.env` file or from Notion URLs (format: `https://www.notion.so/{database_id}?v={view_id}`) or use provided database ID.
+3. **Task Discovery**: Use Notion MCP server to query the database for tasks with status 'AI' or similar AI-assignment indicators.
 
-4. **Task Discovery**: Use Notion MCP server to query the database for tasks with status 'AI' or similar AI-assignment indicators.
-
-5. **Task Analysis**: For each AI-assigned task, extract using MCP server calls:
+4. **Task Analysis**: For each AI-assigned task, extract using MCP server calls:
    - **Complete Page Reading**: Read the ENTIRE page content including all todo lists, sub-lists, bullet points, sub-elements, code blocks, and detailed specifications. This is context engineering, not vibe coding - every detail matters for proper implementation
    - **Assign unique task ID**: Generate a UUID for each task and update the task description format from `some task to do` to `**#[uuid]** some task to do` (within the page content, NOT the page title)
    - Task title and description
@@ -38,6 +29,16 @@ When processing Notion AI tasks, complete the entire workflow autonomously:
    - Branch name (`branch` property) - overrides automatic branch name generation if specified
    - Any specific instructions or context
    - All implementation details, specifications, and requirements found in nested lists and sub-elements
+
+5. **Git Branch Management**: After analyzing all tasks:
+   - Check current git status
+   - Determine branch configuration from analyzed tasks:
+     - Use `branch_merge` property from tasks to determine which branch to checkout from and merge to when told (defaults to `development` if not specified)
+     - Use `branch` property from tasks to override automatic branch name generation
+   - Checkout to the specified merge branch and ensure it's up to date
+   - Create and checkout to a new branch named `ai-tasks-YYYY-MM-DD` (using today's date) from the merge branch, unless `branch` property overrides the name
+   - If branch already exists, switch to it
+   - Ensure working directory is clean before proceeding
 
 6. **Task Prioritization**: Organize discovered tasks by:
    - Dependencies and logical sequence (PRIORITY: tasks with dependencies must be sorted after their prerequisites)
