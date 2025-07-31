@@ -16,9 +16,10 @@ When processing Notion AI tasks, complete the entire workflow autonomously:
 
 2. **Git Branch Management**: Before starting task implementation:
    - Check current git status
-   - Check each task for `branch_base` property to determine base branch (defaults to `development` if not specified)
-   - Checkout to the specified base branch and ensure it's up to date
-   - Create and checkout to a new branch named `ai-tasks-YYYY-MM-DD` (using today's date) from the base branch
+   - Check each task for `branch_merge` property to determine which branch to checkout from and merge to when told (defaults to `development` if not specified)
+   - Check each task for `branch` property to override automatic branch name generation
+   - Checkout to the specified merge branch and ensure it's up to date
+   - Create and checkout to a new branch named `ai-tasks-YYYY-MM-DD` (using today's date) from the merge branch, unless `branch` property overrides the name
    - If branch already exists, switch to it
    - Ensure working directory is clean before proceeding
 
@@ -33,7 +34,8 @@ When processing Notion AI tasks, complete the entire workflow autonomously:
    - Priority level and due dates
    - Required deliverables or acceptance criteria
    - Dependencies or prerequisites
-   - Branch base (`branch_base` property) - the branch to checkout from (defaults to `development`)
+   - Branch merge (`branch_merge` property) - the branch to checkout from and merge to when told (defaults to `development`)
+   - Branch name (`branch` property) - overrides automatic branch name generation if specified
    - Any specific instructions or context
    - All implementation details, specifications, and requirements found in nested lists and sub-elements
 
@@ -123,15 +125,16 @@ NOTION_URL=https://www.notion.so/example123abc456def789/your-database-name?v=vie
 
 ## Git Commands for Branch Management
 
-**Checkout to base branch (from task's branch_base property or default to development):**
+**Checkout to merge branch (from task's branch_merge property or default to development):**
 ```bash
-git checkout {branch_base_or_development}
-git pull origin {branch_base_or_development}
+git checkout {branch_merge_or_development}
+git pull origin {branch_merge_or_development}
 ```
 
-**Create and checkout new branch from base:**
+**Create and checkout new branch from merge branch:**
 ```bash
-git checkout -b ai-tasks-$(date +%Y-%m-%d)
+# Use branch property if specified, otherwise use ai-tasks-YYYY-MM-DD format
+git checkout -b {branch_name_or_ai-tasks-date}
 ```
 
 **Switch to existing branch:**
