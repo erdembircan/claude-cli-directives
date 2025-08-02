@@ -25,6 +25,7 @@ When processing Notion AI tasks, complete the entire workflow autonomously:
    - Priority level and due dates
    - Required deliverables or acceptance criteria
    - Dependencies or prerequisites
+   - Order (`order` property) - numeric value to determine task execution sequence
    - Branch merge (`branch_merge` property) - the branch to checkout from and merge to when told (defaults to `development`)
    - Branch name (`branch` property) - overrides automatic branch name generation if specified
    - Any specific instructions or context
@@ -41,7 +42,8 @@ When processing Notion AI tasks, complete the entire workflow autonomously:
    - Ensure working directory is clean before proceeding
 
 6. **Task Prioritization**: Organize discovered tasks by:
-   - Dependencies and logical sequence (PRIORITY: tasks with dependencies must be sorted after their prerequisites)
+   - Order property (PRIMARY: if `order` property exists, sort tasks by this numeric value first)
+   - Dependencies and logical sequence (SECONDARY: tasks with dependencies must be sorted after their prerequisites)
    - Urgency and importance
    - Resource requirements
    - Estimated effort
