@@ -73,6 +73,7 @@ The Notion MCP server MUST be configured and available. No additional API authen
    - Break down into actionable steps
    - **IMPLEMENT COMPLETELY**: All code changes, fixes, features per specifications
    - Recalculate confidence after implementation
+   - **USER CORRECTION PENALTY**: Subtract 5 points from final confidence for each time user corrected AI behavior during this task
    - IF final confidence < 70: `git reset --hard HEAD && git clean -fd`
    - IF final confidence ≥ 70: Commit with proper message
    
