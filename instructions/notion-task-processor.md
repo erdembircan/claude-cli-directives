@@ -48,13 +48,21 @@ The Notion MCP server MUST be configured and available. No additional API authen
    **A. MANDATORY PRE-TASK SETUP (DO NOT SKIP):**
    - **Task ID Assignment**: ALWAYS set page ID as task ID and update `task-id` property on the page
    - **Branch Management (EXECUTE IN ORDER):**
-     1. **FIRST PRIORITY**: Extract `branch` property from task - IF EXISTS, USE THIS EXACT NAME
-     2. Extract `branch_merge` from task (default: `development`)
-     3. `git checkout {branch_merge}` and `git pull origin {branch_merge}`
-     4. Determine branch name:
-        - **PRIMARY**: IF `branch` property exists: USE THAT EXACT NAME
-        - **FALLBACK**: ELSE use `notion-task-{page_id}` (remove dashes from page_id)
-     5. `git checkout -b {branch_name}` (or `git checkout {branch_name}` if exists)
+     1. Extract `branch_merge` from task (default: `development`)
+     2. `git checkout {branch_merge}` and `git pull origin {branch_merge}`
+     3. **BRANCH NAME DETERMINATION - FOLLOW EXACTLY:**
+        ```
+        IF task has 'branch' property:
+            working_branch_name = task.branch (EXACT VALUE)
+        ELSE:
+            working_branch_name = "notion-task-" + page_id_without_dashes
+        ```
+     4. `git checkout -b {working_branch_name}` (or `git checkout {working_branch_name}` if exists)
+     
+     **EXAMPLES:**
+     - Task has branch="development" → USE "development"
+     - Task has branch="feature-xyz" → USE "feature-xyz"  
+     - Task has NO branch property → USE "notion-task-abc123def456"
    
    **B. CONFIDENCE ASSESSMENT (MANDATORY):**
    - Calculate confidence (1-100): Task clarity (25) + Context (25) + Technical feasibility (25) + Dependencies (25)
