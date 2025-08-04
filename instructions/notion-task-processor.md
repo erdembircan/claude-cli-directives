@@ -36,9 +36,12 @@ When processing Notion AI tasks, complete the entire workflow autonomously:
    - Determine branch configuration from analyzed tasks:
      - Use `branch_merge` property from tasks to determine which branch to checkout from and merge to when told (defaults to `development` if not specified)
      - Use `branch` property from tasks to override automatic branch name generation
-   - Checkout to the specified merge branch and ensure it's up to date
-   - Create and checkout to a new branch named `ai-tasks-YYYY-MM-DD` (using today's date) from the merge branch, unless `branch` property overrides the name
-   - If branch already exists, switch to it
+   - Checkout to the specified merge branch (from `branch_merge` or default to `development`) and ensure it's up to date
+   - Determine the working branch name:
+     - If any task has a `branch` property specified, use that as the branch name
+     - Otherwise, use the default format `ai-tasks-YYYY-MM-DD` (using today's date)
+   - Create and checkout to the working branch from the merge branch
+   - If the working branch already exists, switch to it instead of creating
    - Ensure working directory is clean before proceeding
 
 6. **Task Prioritization**: Organize discovered tasks by:
@@ -137,17 +140,17 @@ git pull origin {branch_merge_or_development}
 **Create and checkout new branch from merge branch:**
 ```bash
 # Use branch property if specified, otherwise use ai-tasks-YYYY-MM-DD format
-git checkout -b {branch_name_or_ai-tasks-date}
+git checkout -b {working_branch_name}
 ```
 
 **Switch to existing branch:**
 ```bash
-git checkout ai-tasks-$(date +%Y-%m-%d)
+git checkout {working_branch_name}
 ```
 
 **Check if branch exists:**
 ```bash
-git branch -l ai-tasks-$(date +%Y-%m-%d)
+git branch -l {working_branch_name}
 ```
 
 **Commit with task reference:**
