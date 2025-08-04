@@ -20,7 +20,7 @@ When processing Notion AI tasks, complete the entire workflow autonomously:
 
 4. **Task Analysis**: For each AI-assigned task, extract using MCP server calls:
    - **Complete Page Reading**: Read the ENTIRE page content including all todo lists, sub-lists, bullet points, sub-elements, code blocks, and detailed specifications. This is context engineering, not vibe coding - every detail matters for proper implementation
-   - **Assign unique task ID**: Generate a UUID for each task and update the task description format from `some task to do` to `**#[uuid]** some task to do` (within the page content, NOT the page title)
+   - **Assign task ID**: Use the page ID as the task ID and update/create the `task-id` property on the page with this value
    - Task title and description
    - Priority level and due dates
    - Required deliverables or acceptance criteria
@@ -69,7 +69,7 @@ When processing Notion AI tasks, complete the entire workflow autonomously:
    - **REQUIRED IMMEDIATELY AFTER EACH TASK**: Add comment to Notion task immediately after processing each individual task (NOT when all tasks are completed) using this exact format:
      ```
      Date:                    YYYY-MM-DD HH:MM:SS
-     Task ID:                 [uuid]
+     Task ID:                 [page_id]
      Task:                    [Short brief description of what was tasked]
      Status:                  COMPLETED/SKIPPED/ROLLED BACK
      Branch:                  [Branch where changes were made]
@@ -94,7 +94,7 @@ When processing Notion AI tasks, complete the entire workflow autonomously:
    - **Task Completion Formatting**: When a task is completed, update the page content to:
      - Check any task-related checkboxes within the page content
      - Apply strikethrough formatting to completed text and list items
-     - Update the task description to show completion status while preserving the UUID format
+     - Update the task description to show completion status while preserving the page ID format
    - Flag any blockers or issues requiring human intervention
 
 9. **Git Integration**: Throughout the process:
