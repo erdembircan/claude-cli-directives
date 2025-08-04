@@ -1,14 +1,16 @@
 # Notion Task Processor
 
-When the user asks to process AI tasks from Notion boards, automatically find and complete tasks assigned to AI using the Notion MCP server.
+## CRITICAL: FOLLOW EVERY STEP EXACTLY - NO SHORTCUTS OR ASSUMPTIONS
+
+When the user asks to process AI tasks from Notion boards, **EXECUTE THE COMPLETE WORKFLOW** without skipping any steps.
 
 ## Setup Requirements
 
-The Notion MCP server should be configured and available for accessing Notion databases and pages. No additional API authentication setup is required as the MCP server handles the connection.
+The Notion MCP server MUST be configured and available. No additional API authentication setup is required.
 
-## Workflow Process
+## MANDATORY EXECUTION WORKFLOW
 
-When processing Notion AI tasks, complete the entire workflow autonomously:
+**EXECUTE ALL STEPS IN SEQUENCE - DO NOT SKIP OR MODIFY:**
 
 1. **Database Setup**: 
    - Check for `NOTION_URL` in `.env` file to extract database ID
@@ -20,7 +22,6 @@ When processing Notion AI tasks, complete the entire workflow autonomously:
 
 4. **Task Analysis**: For each AI-assigned task, extract using MCP server calls:
    - **Complete Page Reading**: Read the ENTIRE page content including all todo lists, sub-lists, bullet points, sub-elements, code blocks, and detailed specifications. This is context engineering, not vibe coding - every detail matters for proper implementation
-   - **Assign task ID**: Use the page ID as the task ID and update/create the `task-id` property on the page with this value
    - Task title and description
    - Priority level and due dates
    - Required deliverables or acceptance criteria
@@ -31,17 +32,8 @@ When processing Notion AI tasks, complete the entire workflow autonomously:
    - Any specific instructions or context
    - All implementation details, specifications, and requirements found in nested lists and sub-elements
 
-5. **Git Branch Management**: After analyzing all tasks:
+5. **Initial Git Setup**: After analyzing all tasks:
    - Check current git status
-   - Determine branch configuration from analyzed tasks:
-     - Use `branch_merge` property from tasks to determine which branch to checkout from and merge to when told (defaults to `development` if not specified)
-     - Use `branch` property from tasks to override automatic branch name generation
-   - Checkout to the specified merge branch (from `branch_merge` or default to `development`) and ensure it's up to date
-   - Determine the working branch name:
-     - If any task has a `branch` property specified, use that as the branch name
-     - Otherwise, use the default format `ai-tasks-YYYY-MM-DD` (using today's date)
-   - Create and checkout to the working branch from the merge branch
-   - If the working branch already exists, switch to it instead of creating
    - Ensure working directory is clean before proceeding
 
 6. **Task Prioritization**: Organize discovered tasks by:
@@ -51,45 +43,54 @@ When processing Notion AI tasks, complete the entire workflow autonomously:
    - Resource requirements
    - Estimated effort
 
-7. **Task Execution**: Begin working on tasks in priority order and COMPLETE EACH TASK FULLY:
-   - **Confidence Rating Assessment**: Before starting any task, calculate a confidence rating (1-100) based on:
-     - Task clarity and specificity (25 points)
-     - Available context and requirements (25 points)
-     - Technical feasibility with current codebase (25 points)
-     - Dependencies and prerequisites availability (25 points)
-   - **Confidence Threshold Check**: Only proceed with task execution if initial confidence rating ≥ 70
-   - If confidence < 70, skip task execution
-   - Break down complex tasks into actionable steps
-   - **EXECUTE TASKS COMPLETELY**: Implement all code changes, fixes, and features according to specifications
-   - **Post-Fix Confidence Recalculation**: After completing any fixes or implementations, recalculate confidence rating
-   - **Rollback Decision**: If final confidence rating < 70:
-     - Rollback all changes made during task execution using git reset
-   - **Success Path**: If final confidence rating ≥ 70:
-     - Keep all changes and commit with appropriate messages
-     - Update task status in Notion via MCP server as work progresses
-     - Mark task checkbox as completed in Notion
-     - Document progress and deliverables
-   - **REQUIRED IMMEDIATELY AFTER EACH TASK**: Add comment to Notion task immediately after processing each individual task (NOT when all tasks are completed) using this exact format:
-     ```
-     Date:                    YYYY-MM-DD HH:MM:SS
-     Task ID:                 [page_id]
-     Task:                    [Short brief description of what was tasked]
-     Status:                  COMPLETED/SKIPPED/ROLLED BACK
-     Branch:                  [Branch where changes were made]
-     Description:             [Short brief explanation of what was done or why it was skipped]
-     Final confidence rating: XX/100
-     Confidence breakdown:    [Only if rating below 100, list specific factors that reduced the score with short detailed explanations]
-     ```
-   - **LOG TO FILE**: Immediately after adding the comment to Notion, prepend the same comment content using the exact format above to `notion-task-processor.log` in the project root for local tracking (newest entries first)
-     - If the log file doesn't exist in the project root, check for a `logs` directory and use `logs/notion-task-processor.log` instead
-     - If neither location exists, create the log file in the project root with a header describing its purpose:
-       ```
-       # Notion Task Processor Log
-       # This file logs task completion comments from the automated Notion task processor.
-       # Each entry shows AI task processing results including status, confidence ratings, and outcomes.
-       # Generated automatically when processing tasks assigned to AI in Notion boards.
-       
-       ```
+7. **Task Execution**: FOR EACH TASK IN PRIORITY ORDER - EXECUTE COMPLETELY:
+   
+   **A. MANDATORY PRE-TASK SETUP (DO NOT SKIP):**
+   - **Task ID Assignment**: ALWAYS set page ID as task ID and update `task-id` property on the page
+   - **Branch Management (EXECUTE IN ORDER):**
+     1. Extract `branch_merge` from task (default: `development`)
+     2. Extract `branch` property if specified
+     3. `git checkout {branch_merge}` and `git pull origin {branch_merge}`
+     4. Determine branch name:
+        - IF `branch` property exists: use that exact name
+        - ELSE: use `notion-task-{page_id}` (remove dashes from page_id)
+     5. `git checkout -b {branch_name}` (or `git checkout {branch_name}` if exists)
+   
+   **B. CONFIDENCE ASSESSMENT (MANDATORY):**
+   - Calculate confidence (1-100): Task clarity (25) + Context (25) + Technical feasibility (25) + Dependencies (25)
+   - IF confidence < 70: SKIP task execution, proceed to step D
+   - IF confidence ≥ 70: CONTINUE to step C
+   
+   **C. TASK IMPLEMENTATION (IF CONFIDENCE ≥ 70):**
+   - Break down into actionable steps
+   - **IMPLEMENT COMPLETELY**: All code changes, fixes, features per specifications
+   - Recalculate confidence after implementation
+   - IF final confidence < 70: `git reset --hard HEAD && git clean -fd`
+   - IF final confidence ≥ 70: Commit with proper message
+   
+   **D. MANDATORY POST-TASK ACTIONS (NEVER SKIP):**
+   - Mark task checkbox as completed in Notion (if confidence ≥ 70)
+   - Apply strikethrough formatting to completed content
+   **E. MANDATORY LOGGING (EXECUTE IMMEDIATELY AFTER EACH TASK):**
+   - Add comment to Notion task using EXACT format:
+   ```
+   Date:                    YYYY-MM-DD HH:MM:SS
+   Task ID:                 [page_id]
+   Task:                    [Brief task description]
+   Status:                  COMPLETED/SKIPPED/ROLLED BACK
+   Branch:                  [Branch name used]
+   Description:             [What was done or why skipped]
+   Final confidence rating: XX/100
+   Confidence breakdown:    [If <100, list factors with explanations]
+   ```
+   - Log to file: `notion-task-processor.log` (root) or `logs/notion-task-processor.log`
+   - If neither exists, create in root with header:
+   ```
+   # Notion Task Processor Log
+   # Automated task processing results with status and confidence ratings
+   # Generated when processing AI-assigned tasks from Notion boards
+   
+   ```
 
 8. **Status Management**: Use Notion MCP server to maintain accurate task status updates:
    - DO NOT move completed pages to 'Done' status - instead mark task checkbox as checked
@@ -139,7 +140,9 @@ git pull origin {branch_merge_or_development}
 
 **Create and checkout new branch from merge branch:**
 ```bash
-# Use branch property if specified, otherwise use ai-tasks-YYYY-MM-DD format
+# BRANCH NAME LOGIC:
+# IF task has 'branch' property: use exact value
+# ELSE: use notion-task-{page_id_without_dashes}
 git checkout -b {working_branch_name}
 ```
 
