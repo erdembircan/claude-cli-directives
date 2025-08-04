@@ -48,12 +48,12 @@ The Notion MCP server MUST be configured and available. No additional API authen
    **A. MANDATORY PRE-TASK SETUP (DO NOT SKIP):**
    - **Task ID Assignment**: ALWAYS set page ID as task ID and update `task-id` property on the page
    - **Branch Management (EXECUTE IN ORDER):**
-     1. Extract `branch_merge` from task (default: `development`)
-     2. Extract `branch` property if specified
+     1. **FIRST PRIORITY**: Extract `branch` property from task - IF EXISTS, USE THIS EXACT NAME
+     2. Extract `branch_merge` from task (default: `development`)
      3. `git checkout {branch_merge}` and `git pull origin {branch_merge}`
      4. Determine branch name:
-        - IF `branch` property exists: use that exact name
-        - ELSE: use `notion-task-{page_id}` (remove dashes from page_id)
+        - **PRIMARY**: IF `branch` property exists: USE THAT EXACT NAME
+        - **FALLBACK**: ELSE use `notion-task-{page_id}` (remove dashes from page_id)
      5. `git checkout -b {branch_name}` (or `git checkout {branch_name}` if exists)
    
    **B. CONFIDENCE ASSESSMENT (MANDATORY):**
@@ -140,9 +140,9 @@ git pull origin {branch_merge_or_development}
 
 **Create and checkout new branch from merge branch:**
 ```bash
-# BRANCH NAME LOGIC:
-# IF task has 'branch' property: use exact value
-# ELSE: use notion-task-{page_id_without_dashes}
+# BRANCH NAME LOGIC - PRIORITY ORDER:
+# **FIRST PRIORITY**: IF task has 'branch' property: USE THAT EXACT VALUE
+# **FALLBACK ONLY**: ELSE use notion-task-{page_id_without_dashes}
 git checkout -b {working_branch_name}
 ```
 
