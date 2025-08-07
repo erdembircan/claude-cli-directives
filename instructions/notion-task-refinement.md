@@ -18,7 +18,13 @@ Refine and improve Notion task descriptions to provide better context and enable
 ### 1. TASK ASSESSMENT
 - Analyze current task for clarity gaps and missing context
 - Identify vague requirements or unclear specifications
-- Evaluate technical feasibility and implementation complexity
+- **MANDATORY CODEBASE RESEARCH**: Before making any assumptions, search and examine the codebase to understand:
+  - Existing architecture and patterns
+  - Current technology stack and dependencies
+  - File structure and naming conventions
+  - Similar implementations or existing features
+  - Code quality standards and testing approaches
+- Evaluate technical feasibility based on codebase findings
 - Check for missing acceptance criteria, dependencies, or success metrics
 
 ### 2. COMPLETE PAGE CLEARING
@@ -28,85 +34,89 @@ Refine and improve Notion task descriptions to provide better context and enable
 
 ### 3. IMPROVED CONTENT GENERATION
 
+**CRITICAL**: Base all content on actual codebase findings, not assumptions.
+
 Create structured, comprehensive task description using this format:
 
 ```
 # [Task Title]
 
 ## Overview
-[Clear, concise 2-3 sentence summary of what needs to be accomplished]
+[Clear, concise 2-3 sentence summary based on codebase analysis]
 
 ## Requirements
 ### Functional Requirements
-- [Specific, testable requirement 1]
-- [Specific, testable requirement 2]
+- [Requirements derived from codebase patterns and existing features]
+- [Specific, testable requirements based on similar implementations]
 
 ### Technical Requirements
-- [Technology stack specifications]
-- [Performance requirements]
-- [Security considerations]
-- [Compatibility requirements]
+- [ACTUAL technology stack found in codebase - package.json, requirements.txt, etc.]
+- [Performance requirements based on existing benchmarks/patterns]
+- [Security considerations from codebase security patterns]
+- [Compatibility requirements from existing configurations]
 
 ## Implementation Approach
 ### Architecture
-[High-level architecture decisions and patterns to use]
+[Architecture decisions based on EXISTING codebase patterns and structure]
 
 ### Step-by-Step Implementation
-1. [Detailed step with specific actions]
-2. [Include file names, function names, specific changes]
-3. [Cover edge cases and error handling]
+1. [Steps based on similar implementations found in codebase]
+2. [ACTUAL file names, directory structure, and function patterns from codebase]
+3. [Error handling patterns observed in existing code]
 
 ### Code Examples/Pseudocode
 ```language
-[Relevant code snippets or pseudocode showing key implementations]
+[Examples based on EXISTING code patterns, not assumptions]
+[Use actual function signatures and patterns found in codebase]
 ```
 
 ## Acceptance Criteria
-- [ ] [Specific, testable outcome 1]
-- [ ] [Specific, testable outcome 2]
-- [ ] [Performance criteria if applicable]
-- [ ] [User experience criteria]
+- [ ] [Criteria based on existing feature acceptance patterns]
+- [ ] [Test patterns observed in codebase]
+- [ ] [Performance criteria from existing benchmarks]
+- [ ] [User experience criteria from existing UI patterns]
 
 ## Dependencies
 ### Technical Dependencies
-- [Required libraries, APIs, services]
-- [Version requirements]
+- [ACTUAL dependencies from package.json/requirements/etc.]
+- [Version requirements from existing dependency management]
 
 ### Task Dependencies
-- [Other tasks that must be completed first]
-- [Blocking issues that need resolution]
+- [Dependencies based on codebase architecture and file relationships]
+- [Blocking issues identified through code analysis]
 
 ## Testing Requirements
-- [ ] [Unit tests to write]
-- [ ] [Integration tests needed]
-- [ ] [Manual testing steps]
+- [ ] [Test patterns matching existing test structure and frameworks]
+- [ ] [Integration test patterns from codebase]
+- [ ] [Manual testing approaches used in existing features]
 
 ## Success Metrics
-- [Quantifiable measures of success]
-- [Performance benchmarks]
-- [User satisfaction criteria]
+- [Metrics based on existing performance monitoring in codebase]
+- [Benchmarks from similar existing features]
+- [User satisfaction patterns from existing implementations]
 
 ## Risk Assessment
 ### High Risk
-- [Risk description] → [Mitigation strategy]
+- [Risks identified through codebase analysis] → [Mitigation from existing patterns]
 
 ### Medium Risk  
-- [Risk description] → [Mitigation strategy]
+- [Technical risks based on dependency analysis] → [Solutions used elsewhere in codebase]
 
 ## Estimated Effort
-**Time Estimate**: [X hours/days]
-**Complexity**: [Low/Medium/High]
-**Reasoning**: [Explanation of estimate based on scope, dependencies, complexity]
+**Time Estimate**: [Based on similar feature complexity found in codebase]
+**Complexity**: [Based on architectural complexity and dependencies found]
+**Reasoning**: [Explanation referencing specific codebase evidence and patterns]
 
 ## Additional Context
-[Any domain knowledge, business context, or background information needed]
+[Context derived from codebase documentation, comments, and existing implementations]
 ```
 
 ### 4. QUALITY VALIDATION
-- Ensure all sections are complete and specific
-- Verify acceptance criteria are testable and measurable
-- Confirm technical approach is feasible and detailed
-- Check that dependencies and risks are properly identified
+- Ensure all sections reference actual codebase evidence
+- Verify acceptance criteria match existing testing patterns
+- Confirm technical approach uses existing architectural patterns
+- Check that dependencies match actual project dependencies
+- Validate all file paths, function names, and technical details against codebase
 
 ### 5. REFINEMENT COMPLETION
 - Update page with improved structured content
@@ -117,11 +127,12 @@ Create structured, comprehensive task description using this format:
 ## Refinement Success Criteria
 
 A well-refined task should:
-- Have zero ambiguity in requirements
-- Include specific technical implementation details
-- Provide clear acceptance criteria
-- Identify all dependencies and risks
-- Enable high-confidence AI execution (>90%)
+- Have zero ambiguity in requirements based on codebase analysis
+- Include specific technical implementation details derived from existing code patterns
+- Provide clear acceptance criteria matching existing test and quality patterns
+- Identify all dependencies and risks through actual codebase examination
+- Reference specific files, functions, and architectural patterns from the codebase
+- Enable high-confidence AI execution (>90%) through evidence-based specifications
 
 ## Environment Requirements
 
