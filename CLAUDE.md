@@ -8,6 +8,9 @@
 ## 🤖 Notion Task Processor
 @instructions/notion-task-processor.md
 
+## 🔧 Notion Task Refinement
+@instructions/notion-task-refinement.md
+
 ## 📊 Productivity Rating
 @instructions/productivity-rating.md
 
