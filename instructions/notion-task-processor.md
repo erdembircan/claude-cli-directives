@@ -47,6 +47,7 @@ The Notion MCP server MUST be configured and available. No additional API authen
    
    **A. MANDATORY PRE-TASK SETUP (DO NOT SKIP):**
    - **Task ID Assignment**: ALWAYS set page ID as task ID and update `task-id` property on the page
+   - **Time Tracking**: Record task start time for elapsed time calculation
    - **Branch Management (EXECUTE IN ORDER):**
      1. Extract `branch_merge` from task (default: `development`)
      2. `git checkout {branch_merge}` and `git pull origin {branch_merge}`
@@ -81,6 +82,7 @@ The Notion MCP server MUST be configured and available. No additional API authen
    - Mark task checkbox as completed in Notion (if confidence ≥ 70)
    - Apply strikethrough formatting to completed content
    **E. MANDATORY LOGGING (EXECUTE IMMEDIATELY AFTER EACH TASK):**
+   - Calculate elapsed time from task start to completion
    - Add comment to Notion task using EXACT format:
    ```
    Date:                    YYYY-MM-DD HH:MM:SS
@@ -88,6 +90,7 @@ The Notion MCP server MUST be configured and available. No additional API authen
    Task:                    [Brief task description]
    Status:                  COMPLETED/SKIPPED/ROLLED BACK
    Branch:                  [Branch name used]
+   Elapsed time:            [X minutes Y seconds] or [X hours Y minutes] (format based on duration)
    Description:             [What was done or why skipped]
    Final confidence rating: XX/100
    Confidence breakdown:    [If <100, list factors with explanations]
